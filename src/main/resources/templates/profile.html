@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile - TastyBytes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+
+
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+}
+
+.user-profile-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    font-size: 16px;
+}
+
+/* Flex container to arrange left and right sections */
+.profile-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Left side: Profile Header */
+.user-profile-header {
+    text-align: center;
+    margin-right: 30px;
+    flex: 1;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.user-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.user-email, .user-phone {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Right side: Profile details and actions */
+.user-profile-right {
+    flex: 2;
+}
+
+.user-profile-details {
+    margin-bottom: 30px;
+}
+
+.user-profile-details h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.info-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.info-list li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.info-list li strong {
+    color: #333;
+}
+
+/* Action Buttons */
+.user-profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.user-profile-actions .btn {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #ffa323;
+    color: #fff;
+}
+
+.btn-orders {
+    background-color: #ffa323;
+    color: #fff;
+}
+
+.btn-password {
+    background-color: #ffa323;
+    color: #fff;
+}
+
+.btn-logout {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.user-profile-actions .btn:hover {
+    opacity: 0.9;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .user-profile-container {
+        padding: 15px;
+    }
+
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-name {
+        font-size: 20px;
+    }
+
+    .user-profile-details h2 {
+        font-size: 20px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-profile-header {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .user-profile-right {
+        margin-top: 20px;
+    }
+
+    .user-profile-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-profile-actions .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+    </style>
+    <style>
+/* Modal Overlay */
+.custom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+/* Modal Content */
+.custom-modal-content {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Close Button */
+.custom-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.custom-close:hover {
+    color: #ff4b5c;
+}
+
+/* Modal Title */
+.custom-modal-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+.custom-form-group {
+    margin-bottom: 15px;
+}
+
+.custom-form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Buttons */
+.custom-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.custom-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.custom-submit-btn {
+    margin-top: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 576px) {
+    .custom-modal-content {
+        width: 95%;
+    }
+
+    .custom-modal-title {
+        font-size: 20px;
+    }
+
+    .custom-btn {
+        font-size: 14px;
+    }
+}
+</style>
+    <style>
+    .custom-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .custom-modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .custom-close {
+        float: right;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .custom-form-group {
+        margin-bottom: 15px;
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .custom-btn {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .custom-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="index">TASTYBYTES</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item "><a href="/index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/menu" class="nav-link">Menu</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
+                <li class="nav-item" th:if="${isAuthenticated}">
+                    <a href="/cart" class="nav-link">Cart</a>
+                </li>
+
+                <!-- Show Profile and Cart if authenticated -->
+                <li class="nav-item active">
+                    <a href="/profile" class="nav-link">Profile</a>
+                </li>
+
+                <li class="nav-item" th:if="${isAuthenticated}">
+                    <a href="/logout" class="nav-link">Logout</a>
+                </li>
+
+                <!-- Show Sign In if not authenticated -->
+                <li class="nav-item" th:if="${!isAuthenticated}">
+                    <a href="/login" class="nav-link">Sign In</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<!-- END nav -->
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">My Account</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="index">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Profile <i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">Profile</span>
+                <h2 class="mb-4">My Account</h2>
+            </div>
+        </div>
+        <div class="user-profile-container">
+            <div class="profile-content">
+                <!-- Left side: Profile header -->
+                <div class="user-profile-header">
+                    <img src="images/male.png" alt="Profile Picture" class="profile-img">
+                    <h1 class="user-name" th:text="${user.firstname} + ' ' + ${user.lastname}">John Doe</h1>
+                    <p class="user-email">Email: <span th:text="${user.email}">johndoe@example.com</span></p>
+                    <p class="user-phone">Mobile: <span th:text="${user.number}">+1234567890</span></p>
+                </div>
+
+                <!-- Right side: Profile details and actions -->
+                <div class="user-profile-right">
+                    <div class="user-profile-details">
+                        <h2>Personal Information</h2>
+                        <ul class="info-list">
+                            <li><strong>First Name:</strong> <span th:text="${user.firstname}">John</span></li>
+                            <li><strong>Last Name:</strong> <span th:text="${user.lastname}">Doe</span></li>
+                            <li><strong>Email:</strong> <span th:text="${user.email}">johndoe@example.com</span></li>
+                            <li><strong>Mobile:</strong> <span th:text="${user.number}">+1234567890</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="user-profile-actions">
+                        <button
+                                th:data-user-id="${user.id}"
+                                th:data-user-firstname="${user.firstname}"
+                                th:data-user-lastname="${user.lastname}"
+                                th:data-user-email="${user.email}"
+                                th:data-user-phone="${user.number}"
+                                class="btn btn-edit"
+                                onclick="openEditProfileModal(this)">
+                            Edit Profile
+                        </button>
+
+                        <a class="btn btn-orders">View Orders</a>
+                        <button th:onclick="'openChangePasswordModal(' + ${user.id} + ')'" class="btn btn-password">Change Password</button>
+                        <a href="/logout" class="btn btn-logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="changePasswordModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <span class="custom-close" onclick="closeChangePasswordModal()">&times;</span>
+        <h2 class="custom-modal-title">Change Password</h2>
+        <form id="customChangePasswordForm" action="/profile/changePassword" method="post">
+            <input type="hidden" name="userId" th:value="${user.id}" id="customUserId">
+            <div class="custom-form-group">
+                <label for="customEmail">Email:</label>
+                <input type="email" name="email" id="customEmail" class="custom-input" required>
+            </div>
+            <div class="custom-form-group">
+                <label for="customCurrentPassword">Current Password:</label>
+                <input type="password" name="currentPassword" id="customCurrentPassword" class="custom-input" required>
+            </div>
+            <div class="custom-form-group">
+                <label for="customNewPassword">New Password:</label>
+                <input type="password" name="newPassword" id="customNewPassword" class="custom-input" required>
+            </div>
+            <div class="custom-form-group">
+                <label for="customConfirmPassword">Confirm New Password:</label>
+                <input type="password" name="confirmPassword" id="customConfirmPassword" class="custom-input" required>
+            </div>
+            <button type="submit" class="custom-btn custom-submit-btn">Change Password</button>
+        </form>
+    </div>
+</div>
+
+<div id="editProfileModal" class="custom-modal" style="display: none;">
+    <div class="custom-modal-content">
+        <span class="custom-close" onclick="closeEditProfileModal()">&times;</span>
+        <h2 class="custom-modal-title">Edit Profile</h2>
+        <form id="editProfileForm" action="/profile/update" method="post">
+            <input type="hidden" name="userId" id="editUserId">
+            <div class="custom-form-group">
+                <label for="editFirstName">First Name:</label>
+                <input type="text" name="firstName" id="editFirstName" class="custom-input">
+            </div>
+            <div class="custom-form-group">
+                <label for="editLastName">Last Name:</label>
+                <input type="text" name="lastName" id="editLastName" class="custom-input">
+            </div>
+            <div class="custom-form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" name="email" id="editEmail" class="custom-input">
+            </div>
+            <div class="custom-form-group">
+                <label for="editPhone">Phone:</label>
+                <input type="tel" name="phone" id="editPhone" class="custom-input">
+            </div>
+            <button type="submit" class="custom-btn custom-submit-btn">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container-fluid px-md-5 px-3">
+        <div class="row mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">TastyBytes</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Newsletter</h2>
+                    <p>Contact Us</p>
+                    <p>Phone : +91 9556911839</p>
+                    <p>Email : psmrutikanta@gmail.com</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Instagram</h2>
+                    <div class="thumb d-sm-flex">
+                        <!-- Loop through the first 3 images -->
+                        <th:block th:each="image, iterStat : ${instagramImages}">
+                            <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+                               th:if="${iterStat.index < 3}">
+                            </a>
+                        </th:block>
+                    </div>
+
+                    <div class="thumb d-flex">
+                        <!-- Loop through the next 3 images -->
+                        <th:block th:each="image, iterStat : ${instagramImages}">
+                            <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+                               th:if="${iterStat.index >= 3 && iterStat.index < 6}">
+                            </a>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by Smrutikanta
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/js/scrollax.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script th:src="@{/js/google-map.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script>
+    function openChangePasswordModal(userId) {
+        document.getElementById("customUserId").value = userId;
+        document.querySelector(".custom-modal").style.display = "flex";
+    }
+
+    function closeChangePasswordModal() {
+        document.querySelector(".custom-modal").style.display = "none";
+    }
+
+document.getElementById("customChangePasswordForm").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch(this.action, {
+            method: this.method,
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
+        });
+
+        const result = await response.json(); // Parse JSON response
+
+        if (response.ok) {
+            alert(result.message);
+            closeChangePasswordModal();
+            window.location.reload(); // Refresh the page after successful submission
+        } else {
+            alert(`Error: ${result.message}`);
+        }
+    } catch (error) {
+        alert(`An unexpected error occurred: ${error.message}`);
+    }
+});
+</script>
+<script>
+    function openEditProfileModal(button) {
+    // Get the data attributes from the clicked button
+    var userId = button.getAttribute('data-user-id');
+    var firstName = button.getAttribute('data-user-firstname');
+    var lastName = button.getAttribute('data-user-lastname');
+    var email = button.getAttribute('data-user-email');
+    var phone = button.getAttribute('data-user-phone');
+
+    // Populate the modal input fields with the data
+    document.getElementById("editUserId").value = userId;
+    document.getElementById("editFirstName").value = firstName;
+    document.getElementById("editLastName").value = lastName;
+    document.getElementById("editEmail").value = email;
+    document.getElementById("editPhone").value = phone;
+
+    // Show the modal
+    document.getElementById("editProfileModal").style.display = "block";
+}
+
+function closeEditProfileModal() {
+    document.getElementById("editProfileModal").style.display = "none";
+}
+
+    document.getElementById("editProfileForm").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(this); // Gather form data
+
+    try {
+        const response = await fetch(this.action, {
+            method: this.method, // POST method
+            headers: {
+                'Accept': 'application/json'  // Set the correct accept header for JSON
+            },
+            body: formData  // Send the form data as FormData
+        });
+
+        const result = await response.json(); // Parse the JSON response
+
+        if (response.ok) {
+            alert("updated"); // Show success message
+            closeEditProfileModal(); // Close the modal
+            window.location.reload(); // Refresh the page to reflect changes
+        } else {
+            alert(`Error: ${result.message}`); // Show error message
+        }
+    } catch (error) {
+        alert(`An unexpected error occurred: ${error.message}`); // Show any unexpected errors
+    }
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Menu - TastyBytes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miss+Fajardose&display=swap" rel="stylesheet">
+
+	  <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+	  <link rel="stylesheet" th:href="@{/css/animate.css}">
+	  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	  <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+	  <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+	  <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+	  <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+
+
+	  <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+	  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+	  <link rel="stylesheet" th:href="@{/css/style.css}">
+	  <style>
+	/* Optionally, add responsive behavior for smaller screens */
+	@media (max-width: 767px) {
+    .col-md-4 {
+        col-span: 12; /* On small screens, show items as a full row */
+    }
+	}
+	  </style>
+  </head>
+  <body>
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index">TASTYBYTES</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item "><a href="/index" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+					<li class="nav-item active"><a href="/menu" class="nav-link">Menu</a></li>
+					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+					<li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
+					<li class="nav-item">
+						<a href="/cart" class="nav-link">Cart</a>
+					</li>
+
+					<!-- Show Profile and Cart if authenticated -->
+					<li class="nav-item" th:if="${isAuthenticated}">
+						<a href="/profile" class="nav-link">Profile</a>
+					</li>
+
+					<li class="nav-item" th:if="${isAuthenticated}">
+						<a href="/logout" class="nav-link">Logout</a>
+					</li>
+
+					<!-- Show Sign In if not authenticated -->
+					<li class="nav-item" th:if="${!isAuthenticated}">
+						<a href="/login" class="nav-link">Sign In</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	  </nav>
+    <!-- END nav -->
+    
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">Our Specialties</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="index">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Menu <i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+	
+		<section class="ftco-section">
+    	<div class="container-fluid px-4">
+    		<div class="row justify-content-center mb-5 pb-2">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+          	<span class="subheading">Specialties</span>
+            <h2 class="mb-4">Our Menu</h2>
+          </div>
+        </div>
+			<div th:each="entry : ${groupedItems}" class="row">
+				<!-- Category Heading -->
+				<div class="col-12">
+					<div class="heading-menu text-center ftco-animate">
+						<h3 th:text="${entry.key}"></h3> <!-- Category Name -->
+					</div>
+				</div>
+
+				<!-- Menu Items for the Current Category -->
+				<div class="col-12">
+					<div class="row">
+						<div th:each="menu : ${entry.value}" class="col-md-4 col-lg-3 menu-wrap">
+							<div class="menus d-flex ftco-animate">
+								<div class="menu-img img" th:style="'background-image: url(images/' + ${menu.image} + ');'"></div>
+								<div class="text">
+									<div class="d-flex justify-content-between align-items-center">
+										<h3 th:text="${menu.name}" class="menu-name"></h3>
+										<span class="price" th:text="${menu.price}"></span>
+									</div>
+									<p th:text="${menu.ingredients}"></p>
+									<button class="btn btn-primary order-btn" data-bs-toggle="modal" data-bs-target="#orderModal"
+											th:attr="data-image='images/' + ${menu.image},
+                                          data-name=${menu.name},
+                                          data-ingredients=${menu.ingredients},
+                                          data-offer=${menu.offer},
+                                          data-above-price=${menu.abovePrice}">
+										Order
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </section>
+	  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+			  <div class="modal-content">
+				  <div class="modal-header">
+					  <h5 class="modal-title" id="orderModalLabel">Order Item</h5>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				  </div>
+				  <div class="modal-body">
+					  <div class="order-modal-content">
+						  <div class="order-modal-image mb-3">
+							  <img id="modalImage" src="" alt="Item Image" class="img-fluid rounded">
+						  </div>
+						  <h5 id="modalName" class="fw-bold"></h5>
+						  <p id="modalIngredients"></p>
+						  <p class="text-success">
+							  <span id="modalOffer"></span> off on <span id="modalAbovePrice"></span> items
+						  </p>
+						  <button class="btn btn-success w-100 mt-3">Add to Cart</button>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+	  </div>
+
+	  <footer class="ftco-footer ftco-bg-dark ftco-section">
+		  <div class="container-fluid px-md-5 px-3">
+			  <div class="row mb-5">
+				  <div class="col-md-6 col-lg-3">
+					  <div class="ftco-footer-widget mb-4">
+						  <h2 class="ftco-heading-2">TastyBytes</h2>
+						  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						  <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+							  <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+							  <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+							  <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+						  </ul>
+					  </div>
+				  </div>
+				  <div class="col-md-6 col-lg-3">
+					  <div class="ftco-footer-widget mb-4">
+						  <h2 class="ftco-heading-2">Newsletter</h2>
+						  <p>Contact Us</p>
+						  <p>Phone : +91 9556911839</p>
+						  <p>Email : psmrutikanta@gmail.com</p>
+					  </div>
+				  </div>
+				  <div class="col-md-6 col-lg-3">
+					  <div class="ftco-footer-widget mb-4">
+						  <h2 class="ftco-heading-2">Instagram</h2>
+						  <div class="thumb d-sm-flex">
+							  <!-- Loop through the first 3 images -->
+							  <th:block th:each="image, iterStat : ${instagramImages}">
+								  <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+									 th:if="${iterStat.index < 3}">
+								  </a>
+							  </th:block>
+						  </div>
+
+						  <div class="thumb d-flex">
+							  <!-- Loop through the next 3 images -->
+							  <th:block th:each="image, iterStat : ${instagramImages}">
+								  <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+									 th:if="${iterStat.index >= 3 && iterStat.index < 6}">
+								  </a>
+							  </th:block>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-md-12 text-center">
+
+					  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by Smrutikanta
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+				  </div>
+			  </div>
+		  </div>
+	  </footer>
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+	<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+	<script th:src="@{/js/jquery.stellar.min.js}"></script>
+	<script th:src="@{/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+	<script th:src="@{/js/aos.js}"></script>
+	<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+	<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+	<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+	<script th:src="@{/js/scrollax.min.js}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script th:src="@{/js/google-map.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const orderModal = document.getElementById("orderModal");
+
+        orderModal.addEventListener("show.bs.modal", function (event) {
+            const button = event.relatedTarget;
+            const image = button.getAttribute("data-image");
+            const name = button.getAttribute("data-name");
+            const ingredients = button.getAttribute("data-ingredients");
+            const offer = button.getAttribute("data-offer");
+            const abovePrice = button.getAttribute("data-above-price");
+
+            document.getElementById("modalImage").src = image;
+            document.getElementById("modalName").textContent = name;
+            document.getElementById("modalIngredients").textContent = ingredients;
+            document.getElementById("modalOffer").textContent = offer;
+            document.getElementById("modalAbovePrice").textContent = abovePrice;
+        });
+    });
+</script>
+	  <!-- Bootstrap JS -->
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Reservation - TastyBytes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miss+Fajardose&display=swap" rel="stylesheet">
+
+	  <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+	  <link rel="stylesheet" th:href="@{/css/animate.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+	  <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+	  <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+
+	  <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+	  <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+
+
+	  <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+	  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+	  <link rel="stylesheet" th:href="@{/css/style.css}">
+	  <style>
+		  .modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+.modal-content {
+	background: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	width: 90%;
+	max-width: 400px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	text-align: center;
+}
+
+#reservation-message {
+	text-align: center;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	display: none;
+}
+#reservation-message.success {
+	background-color: #28a745;
+}
+#reservation-message.error {
+	background-color: #dc3545;
+}
+#loginModal form{
+    height: 520px;
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+#loginModal form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+#loginModal form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+#loginModal label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+}
+#loginModal input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+#loginModal ::placeholder{
+    color: #e5e5e5;
+}
+#loginModal button{
+    margin-top: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+	  </style>
+  </head>
+  <body>
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index">TASTYBYTES</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a href="/index" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+					<li class="nav-item"><a href="/menu" class="nav-link">Menu</a></li>
+					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+					<li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
+					<li class="nav-item">
+						<a href="/cart" class="nav-link">Cart</a>
+					</li>
+
+					<!-- Show Profile and Cart if authenticated -->
+					<li class="nav-item" th:if="${isAuthenticated}">
+						<a href="/profile" class="nav-link">Profile</a>
+					</li>
+
+					<li class="nav-item" th:if="${isAuthenticated}">
+						<a href="/logout" class="nav-link">Logout</a>
+					</li>
+
+					<!-- Show Sign In if not authenticated -->
+					<li class="nav-item" th:if="${!isAuthenticated}">
+						<a href="/login" class="nav-link">Sign In</a>
+					</li>
+				</ul>
+			</div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">Reservation</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="index">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Reservation <i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+	  <section class="ftco-section ftco-no-pt ftco-no-pb">
+		  <div class="container-fluid px-0">
+			  <div class="row d-flex no-gutters">
+				  <div class="col-md-6 order-md-last ftco-animate makereservation p-4 p-md-5 pt-5">
+					  <div class="py-md-5">
+						  <div class="heading-section ftco-animate mb-5">
+							  <span class="subheading">Book a table</span>
+							  <h2 class="mb-4">Make Reservation</h2>
+						  </div>
+						  <form id="reservation-form">
+							  <div id="reservation-message" class="mb-3"></div> <!-- Message Container -->
+							  <div class="row">
+								  <div class="col-md-6">
+									  <div class="form-group">
+										  <label for="name">Name</label>
+										  <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+									  </div>
+								  </div>
+								  <div class="col-md-6">
+									  <div class="form-group">
+										  <label for="email">Email</label>
+										  <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+										  <span id="email-error" class="text-danger" style="display: none;">Invalid email address.</span>
+									  </div>
+								  </div>
+								  <div class="col-md-6">
+									  <div class="form-group">
+										  <label for="phone">Phone</label>
+										  <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+										  <span id="phone-error" class="text-danger" style="display: none;">Phone number must be 10 digits.</span>
+									  </div>
+								  </div>
+								  <div class="col-md-6">
+									  <div class="form-group">
+										  <label for="book_date">Date</label>
+										  <input type="text" class="form-control" id="book_date" required>
+									  </div>
+								  </div>
+								  <div class="col-md-6">
+									  <div class="form-group">
+										  <label for="book_time">Time</label>
+										  <input type="text" class="form-control" id="book_time" required>
+									  </div>
+								  </div>
+								  <div class="col-md-6">
+									  <div class="form-group">
+										  <label for="persons">Person</label>
+										  <select id="persons" class="form-control" required>
+											  <option value="" disabled selected>Select</option>
+											  <option value="1">1</option>
+											  <option value="2">2</option>
+											  <option value="3">3</option>
+											  <option value="4">4+</option>
+										  </select>
+									  </div>
+								  </div>
+								  <div class="col-md-12 mt-3">
+									  <div class="form-group">
+										  <input type="submit" value="Make a Reservation" class="btn btn-primary py-3 px-5">
+									  </div>
+								  </div>
+							  </div>
+						  </form>
+					  </div>
+				  </div>
+				  <div class="col-md-6 d-flex align-items-stretch pb-5 pb-md-0">
+					  <div id="map"></div>
+				  </div>
+			  </div>
+		  </div>
+	  </section>
+
+	  <!-- Login Modal -->
+	  <div id="loginModal" style="display: none;" class="modal-overlay">
+		  <div class="modal-content">
+			  <form th:action="@{/dologin}"  method="post">
+				  <h3>Login Here</h3>
+
+				  <label for="popup-username">Username</label>
+				  <input type="text" name="username"  placeholder="Email or Phone" id="popup-username">
+
+				  <label for="popup-password">Password</label>
+				  <input type="password"  name="password" placeholder="Password" id="popup-password">
+
+				  <button type="submit" id="loginButton">Log In</button>
+				  <a href="signup">Create an account</a>
+			  </form>
+		  </div>
+	  </div>
+
+
+
+	  <footer class="ftco-footer ftco-bg-dark ftco-section">
+		  <div class="container-fluid px-md-5 px-3">
+			  <div class="row mb-5">
+				  <div class="col-md-6 col-lg-3">
+					  <div class="ftco-footer-widget mb-4">
+						  <h2 class="ftco-heading-2">TastyBytes</h2>
+						  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						  <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+							  <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+							  <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+							  <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+						  </ul>
+					  </div>
+				  </div>
+				  <div class="col-md-6 col-lg-3">
+					  <div class="ftco-footer-widget mb-4">
+						  <h2 class="ftco-heading-2">Newsletter</h2>
+						  <p>Contact Us</p>
+						  <p>Phone : +91 9556911839</p>
+						  <p>Email : psmrutikanta@gmail.com</p>
+					  </div>
+				  </div>
+				  <div class="col-md-6 col-lg-3">
+					  <div class="ftco-footer-widget mb-4">
+						  <h2 class="ftco-heading-2">Instagram</h2>
+						  <div class="thumb d-sm-flex">
+							  <!-- Loop through the first 3 images -->
+							  <th:block th:each="image, iterStat : ${instagramImages}">
+								  <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+									 th:if="${iterStat.index < 3}">
+								  </a>
+							  </th:block>
+						  </div>
+
+						  <div class="thumb d-flex">
+							  <!-- Loop through the next 3 images -->
+							  <th:block th:each="image, iterStat : ${instagramImages}">
+								  <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+									 th:if="${iterStat.index >= 3 && iterStat.index < 6}">
+								  </a>
+							  </th:block>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-md-12 text-center">
+
+					  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by Smrutikanta
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+				  </div>
+			  </div>
+		  </div>
+	  </footer>
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+	<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+	<script th:src="@{/js/jquery.stellar.min.js}"></script>
+	<script th:src="@{/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+	<script th:src="@{/js/aos.js}"></script>
+	<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+	<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+	<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+	<script th:src="@{/js/scrollax.min.js}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script th:src="@{/js/google-map.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+
+	  <script>
+function showLoginModal() {
+    const modal = document.getElementById("loginModal");
+    modal.style.display = "flex"; // Display as a flexbox modal
+}
+
+
+document.querySelector("#reservation-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const book_date = document.getElementById("book_date").value;
+    const book_time = document.getElementById("book_time").value;
+    const persons = parseInt(document.getElementById("persons").value);
+
+    const emailError = document.getElementById("email-error");
+    const phoneError = document.getElementById("phone-error");
+
+    // Reset error messages
+    emailError.style.display = "none";
+    phoneError.style.display = "none";
+
+    let isValid = true;
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        emailError.style.display = "block";
+        isValid = false;
+    }
+
+    // Validate phone
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+        phoneError.style.display = "block";
+        isValid = false;
+    }
+
+    if (!isValid) {
+        return;
+    }
+
+    // Prepare form data
+    const formData = {
+        name,
+        email,
+        phone,
+        book_date,
+        book_time,
+        persons,
+    };
+
+    fetch("/addReservation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            const messageBox = document.getElementById("reservation-message");
+            messageBox.style.display = "block";
+
+            if (!data.success && data.error === "User not logged in.") {
+                showLoginModal(); // Show login modal if the user is not logged in
+            } else if (data.success) {
+                messageBox.className = "success";
+                messageBox.textContent = "Reservation successful!";
+
+                // Clear the form after successful submission
+                document.getElementById("reservation-form").reset();
+
+                // Optionally, hide the success message after a delay
+                setTimeout(() => {
+                    messageBox.style.display = "none"; // Hide the message box
+                }, 2000);
+            } else {
+
+                showLoginModal();
+            }
+        })
+        .catch(() => {
+            const messageBox = document.getElementById("reservation-message");
+            messageBox.style.display = "block";
+            messageBox.className = "error";
+            messageBox.textContent = "An error occurred. Please try again later.";
+        });
+});
+</script>
+
+  </body>
+</html>

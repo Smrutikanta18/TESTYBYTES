@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Admin dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      th:href="@{/img1/kaiadmin/favicon.ico}"
+      type="image/x-icon"
+    />
+    <style>
+
+/* Hover effect for menu links */
+.menu-link:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Mobile responsive design */
+@media (max-width: 767px) {
+    .row {
+        flex-direction: column; /* Stack the menu items vertically */
+    }
+
+    .col {
+        width: 100%; /* Each button takes full width on mobile */
+        margin-bottom: 10px; /* Space between buttons */
+    }
+
+    .menu-link {
+        font-size: 16px; /* Slightly smaller font size for mobile */
+    }
+}
+
+/* Style for the small hover box */
+.hover-box {
+    position: absolute;
+    display: none;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+
+    </style>
+    <!-- Fonts and icons -->
+    <script th:src="@{/js1/plugin/webfont/webfont.min.js}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css1/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css1/plugins.min.css}" />
+    <link rel="stylesheet" th:href="@{/css1/kaiadmin.min.css}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/css1/demo.css}" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="adminIndex" class="logo">
+              <div
+                class="navbar-brand">
+                <h1 style="color:white">TastyBytes</h1>
+              </div>
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item active">
+                <a
+                  data-bs-toggle="collapse"
+                  href="adminIndex"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                </span>
+                <h4 class="text-section">Components</h4>
+              </li>
+              <li class="nav-item">
+                <a href="adminProfile">
+                  <p>Profile</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="data">
+                  <p>Data</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="menuitem">
+                  <p>MenuItem</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="banners">
+                  <p>BannerImage</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="insta">
+                  <p>InstagramImage</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="">
+                  <p>PendingOrders</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="">
+                  <p>CompletedOrders</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="adminLogout">
+                  <p>logout</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="adminIndex" class="logo">
+                <div class="navbar-brand">
+                  <h1 style="color:white">TastyBytes</h1>
+                </div>
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+                <div >
+                  <h1><b>Dashboard</b></h1>
+                </div>
+              </nav>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+        <div class="container">
+          <div class="page-inner">
+            <div
+              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
+            >
+              <div>
+                <h3 class="fw-bold mb-3">Dashboard</h3>
+              </div>
+            </div>
+            <div class="menu-container">
+              <div class="row">
+                <div class="col">
+                  <a href="adminProfile" class="menu-link" data-title="Profile">Profile</a>
+                </div>
+                <div class="col">
+                  <a href="data" class="menu-link" data-title="Data">Data</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a href="#" class="menu-link" data-title="MenuItem">MenuItem</a>
+                </div>
+                <div class="col">
+                  <a href="banners" class="menu-link" data-title="BannerImage">BannerImage</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a href="insta" class="menu-link" data-title="InstagramImage">InstagramImage</a>
+                </div>
+                <div class="col">
+                  <a href="#" class="menu-link" data-title="PendingOrders">PendingOrders</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a href="#" class="menu-link" data-title="CompletedOrders">CompletedOrders</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Small box for hovered link -->
+            <div id="hover-box" class="hover-box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="@{/js1/core/jquery-3.7.1.min.js}"></script>
+    <script src="@{/js1/core/popper.min.js}"></script>
+    <script src="@{/js1/core/bootstrap.min.js}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="@{/js1/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+
+    <!-- Chart JS -->
+    <script src="@{/js1/plugin/chart.js/chart.min.js}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="@{/js1/plugin/jquery.sparkline/jquery.sparkline.min.js}"></script>
+
+    <!-- Chart Circle -->
+    <script src="@{/js1/plugin/chart-circle/circles.min.js}"></script>
+
+    <!-- Datatables -->
+    <script src="@{/js1/plugin/datatables/datatables.min.js}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="@{/js1/plugin/bootstrap-notify/bootstrap-notify.min.js}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="@{/js1/plugin/jsvectormap/jsvectormap.min.js}"></script>
+    <script src="@{/js1/plugin/jsvectormap/world.js}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="@{/js1/plugin/sweetalert/sweetalert.min.js}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="@{/js1/kaiadmin.min.js}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="@{/js1/setting-demo.js}"></script>
+    <script src="@{/js1/demo.js}"></script>
+    <script>
+      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#177dff",
+        fillColor: "rgba(23, 125, 255, 0.14)",
+      });
+
+      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#f3545d",
+        fillColor: "rgba(243, 84, 93, .14)",
+      });
+
+      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#ffa534",
+        fillColor: "rgba(255, 165, 52, .14)",
+      });
+    </script>
+    <script>
+    // JavaScript to show the hover box when hovering over a menu link
+    const links = document.querySelectorAll('.menu-link');
+    const hoverBox = document.getElementById('hover-box');
+
+    links.forEach(link => {
+    link.addEventListener('mouseenter', function(event) {
+    const title = link.getAttribute('data-title'); // Get the data-title attribute
+    hoverBox.textContent = title; // Set the box text
+    hoverBox.style.display = 'block'; // Show the box
+
+    // Position the box near the link
+    const linkRect = link.getBoundingClientRect();
+    hoverBox.style.left = linkRect.right + 10 + 'px'; // 10px to the right of the link
+    hoverBox.style.top = linkRect.top + window.scrollY + 'px'; // Align with the top of the link
+    });
+
+    link.addEventListener('mouseleave', function() {
+    hoverBox.style.display = 'none'; // Hide the box when not hovering
+    });
+    });
+</script>
+  </body>
+</html>

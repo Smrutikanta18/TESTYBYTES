@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            th:href="@{/img1/kaiadmin/favicon.ico}"
+            type="image/x-icon"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .banner-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .banner-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .banner-container {
+            margin-top: 20px;
+        }
+
+        .add-banner-btn {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .banner-img {
+                height: 150px;
+            }
+        }
+    </style>
+    <!-- Fonts and icons -->
+    <script th:src="@{/js1/plugin/webfont/webfont.min.js}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css1/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css1/plugins.min.css}" />
+    <link rel="stylesheet" th:href="@{/css1/kaiadmin.min.css}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/css1/demo.css}" />
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+                <a href="adminIndex" class="logo">
+                    <div
+                            class="navbar-brand">
+                        <h1 style="color:white">TastyBytes</h1>
+                    </div>
+                </a>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="gg-menu-right"></i>
+                    </button>
+                    <button class="btn btn-toggle sidenav-toggler">
+                        <i class="gg-menu-left"></i>
+                    </button>
+                </div>
+                <button class="topbar-toggler more">
+                    <i class="gg-more-vertical-alt"></i>
+                </button>
+            </div>
+            <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <ul class="nav nav-secondary">
+                    <li class="nav-item active">
+                        <a
+                                data-bs-toggle="collapse"
+                                href="adminIndex"
+                                class="collapsed"
+                                aria-expanded="false"
+                        >
+                            <i class="fas fa-home"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                </span>
+                        <h4 class="text-section">Components</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminProfile">
+                            <p>Profile</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="data">
+                            <p>Data</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="menuitem">
+                            <p>MenuItem</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="banners">
+                            <p>BannerImage</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="insta">
+                            <p>InstagramImage</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="">
+                            <p>PendingOrders</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="">
+                            <p>CompletedOrders</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminLogout">
+                            <p>logout</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="main-header">
+            <div class="main-header-logo">
+                <!-- Logo Header -->
+                <div class="logo-header" data-background-color="dark">
+                    <a href="adminIndex" class="logo">
+                        <div class="navbar-brand">
+                            <h1 style="color:white">TastyBytes</h1>
+                        </div>
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar">
+                            <i class="gg-menu-right"></i>
+                        </button>
+                        <button class="btn btn-toggle sidenav-toggler">
+                            <i class="gg-menu-left"></i>
+                        </button>
+                    </div>
+                    <button class="topbar-toggler more">
+                        <i class="gg-more-vertical-alt"></i>
+                    </button>
+                </div>
+                <!-- End Logo Header -->
+            </div>
+            <!-- Navbar Header -->
+            <nav
+                    class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+            >
+                <div class="container-fluid">
+                    <nav
+                            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+                    >
+                        <div >
+                            <h1><b>Dashboard</b></h1>
+                        </div>
+                    </nav>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+        </div>
+        <div class="container">
+            <div class="page-inner">
+                <div
+                        class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
+                >
+                    <div>
+                        <h3 class="fw-bold mb-3">Dashboard</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container banner-container">
+                <button class="btn btn-primary add-banner-btn" data-bs-toggle="modal" data-bs-target="#addBannerModal">Add Banner Image</button>
+                <div class="row">
+                    <div class="col-md-4" th:each="banner : ${banners}">
+                        <div class="card banner-card">
+                            <img th:src="@{'images/' + ${banner.bImage}}" alt="Banner" class="banner-img">
+                            <div>
+                                <p th:text="${banner.content}"></p>
+                            </div>
+                            <div class="card-body text-center">
+                                <button class="btn btn-warning" data-bs-toggle="modal" th:data-bs-target="'#editBannerModal-' + ${banner.bId}">Edit</button>
+                                <a th:href="@{'/banners/delete/' + ${banner.bId}}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Banner Modal -->
+            <div class="modal fade" id="addBannerModal" tabindex="-1" aria-labelledby="addBannerModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form th:action="@{/banners/add}" method="post" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addBannerModalLabel">Add Banner</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="bannerImage" class="form-label">Upload Banner Image</label>
+                                    <input type="file" class="form-control" name="bImage" id="bannerImage" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bannerContent" class="form-label">Banner Content</label>
+                                    <input type="text" class="form-control" name="content" id="bannerContent" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Banner Modal -->
+            <div th:each="banner : ${banners}" class="modal fade" th:id="'editBannerModal-' + ${banner.bId}" tabindex="-1" aria-labelledby="editBannerModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form th:action="@{'/banners/edit/' + ${banner.bId}}" method="post" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editBannerModalLabel">Edit Banner</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="editBannerImage" class="form-label">Upload New Banner Image</label>
+                                    <input type="file" class="form-control" name="bImage" id="editBannerImage">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script src="@{/js1/core/jquery-3.7.1.min.js}"></script>
+<script src="@{/js1/core/popper.min.js}"></script>
+<script src="@{/js1/core/bootstrap.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="@{/js1/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+
+<!-- Chart JS -->
+<script src="@{/js1/plugin/chart.js/chart.min.js}"></script>
+
+<!-- jQuery Sparkline -->
+<script src="@{/js1/plugin/jquery.sparkline/jquery.sparkline.min.js}"></script>
+
+<!-- Chart Circle -->
+<script src="@{/js1/plugin/chart-circle/circles.min.js}"></script>
+
+<!-- Datatables -->
+<script src="@{/js1/plugin/datatables/datatables.min.js}"></script>
+
+<!-- Bootstrap Notify -->
+<script src="@{/js1/plugin/bootstrap-notify/bootstrap-notify.min.js}"></script>
+
+<!-- jQuery Vector Maps -->
+<script src="@{/js1/plugin/jsvectormap/jsvectormap.min.js}"></script>
+<script src="@{/js1/plugin/jsvectormap/world.js}"></script>
+
+<!-- Sweet Alert -->
+<script src="@{/js1/plugin/sweetalert/sweetalert.min.js}"></script>
+
+<!-- Kaiadmin JS -->
+<script src="@{/js1/kaiadmin.min.js}"></script>
+
+<!-- Kaiadmin DEMO methods, don't include it in your project! -->
+<script src="@{/js1/setting-demo.js}"></script>
+<script src="@{/js1/demo.js}"></script>
+<script>
+      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#177dff",
+        fillColor: "rgba(23, 125, 255, 0.14)",
+      });
+
+      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#f3545d",
+        fillColor: "rgba(243, 84, 93, .14)",
+      });
+
+      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#ffa534",
+        fillColor: "rgba(255, 165, 52, .14)",
+      });
+    </script>
+</body>
+</html>
