@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Menu - TastyBytes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miss+Fajardose&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+
+
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+    .cart-notification7777 {
+    background-color: #ffa323;
+    color: white;
+    border-radius: 50%; /* Makes it a perfect circle */
+    width: 20px; /* Adjusted size for a neat look */
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Slightly larger for readability */
+    font-weight: bold;
+    position: absolute; /* Position relative to the parent */
+    top: 1px; /* Adjusted positioning */
+    right: 1px; /* Adjusted positioning */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); /* Glowing effect */
+    animation: pulse 1.5s infinite; /* Adds a subtle pulsing effect */
+}
+
+/* Optional pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Ensures the notification stays relative to the nav-link */
+.nav-item {
+    position: relative;
+}
+	/* Optionally, add responsive behavior for smaller screens */
+	@media (max-width: 767px) {
+    .col-md-4 {
+        col-span: 12; /* On small screens, show items as a full row */
+    }
+	}
+	  </style>
+    <style>
+    .item-card {
+    margin-bottom: 20px;
+    }
+
+    .item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .item-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .item-img {
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    }
+
+    .item-details {
+    text-align: center;
+    margin-top: 10px;
+    }
+
+    .item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    }
+
+    .item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    }
+
+    .quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    transition: background-color 0.2s, color 0.2s;
+    }
+
+    .quantity-btn:hover {
+    background-color: #007bff;
+    color: #fff;
+    }
+
+    .item-quantity {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    }
+
+    .remove-item-btn {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    }
+
+    .remove-item-btn:hover {
+    background-color: #c82333;
+    }
+
+    .checkout-container {
+    display: flex;
+    justify-content: flex-end;  /* This will push the button to the right end */
+    padding: 10px;
+}
+
+.checkout-btn {
+    background-color: #28a745; /* Green background color */
+    color: white;              /* White text color */
+    font-size: 16px;           /* Font size */
+    padding: 10px 20px;        /* Padding for the button */
+    border: none;              /* No border */
+    border-radius: 5px;        /* Rounded corners */
+    cursor: pointer;          /* Cursor pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.checkout-btn:hover {
+    background-color: #218838; /* Darker green when hovering */
+}
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="index">TASTYBYTES</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item "><a href="/index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item "><a href="/menu" class="nav-link">Menu</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
+                <li class="nav-item">
+                    <a href="/cart" class="nav-link">Cart<span id="cartNotification" class="cart-notification7777">0</span></a>
+                </li>
+
+                <!-- Show Profile and Cart if authenticated -->
+                <li class="nav-item" th:if="${isAuthenticated}">
+                    <a href="/profile" class="nav-link">Profile</a>
+                </li>
+
+                <li class="nav-item" th:if="${isAuthenticated}">
+                    <a href="/logout" class="nav-link">Logout</a>
+                </li>
+
+                <!-- Show Sign In if not authenticated -->
+                <li class="nav-item" th:if="${!isAuthenticated}">
+                    <a href="/login" class="nav-link">Sign In</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<!-- END nav -->
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">Cart</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="index">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>cart <i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section">
+                <span class="subheading">Your Cart</span>
+                <h2 class="mb-4">Cart Items</h2>
+            </div>
+        </div>
+        <div class="row" id="cartItemsContainer">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+    </div>
+</section>
+
+<div class="checkout-container">
+    <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+</div>
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container-fluid px-md-5 px-3">
+        <div class="row mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">TastyBytes</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Newsletter</h2>
+                    <p>Contact Us</p>
+                    <p>Phone : +91 9556911839</p>
+                    <p>Email : psmrutikanta@gmail.com</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Instagram</h2>
+                    <div class="thumb d-sm-flex">
+                        <!-- Loop through the first 3 images -->
+                        <th:block th:each="image, iterStat : ${instagramImages}">
+                            <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+                               th:if="${iterStat.index < 3}">
+                            </a>
+                        </th:block>
+                    </div>
+
+                    <div class="thumb d-flex">
+                        <!-- Loop through the next 3 images -->
+                        <th:block th:each="image, iterStat : ${instagramImages}">
+                            <a href="#" class="thumb-menu img" th:style="'background-image: url(images/' + ${image.image} + ');'"
+                               th:if="${iterStat.index >= 3 && iterStat.index < 6}">
+                            </a>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by Smrutikanta
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/js/scrollax.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script th:src="@{/js/google-map.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Fetch cart items on page load
+    fetch("/cart/get-cart-items", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status === "success") {
+            const cartItemsContainer = document.getElementById("cartItemsContainer");
+            cartItemsContainer.innerHTML = "";
+
+            data.cartItems.forEach((item) => {
+                const itemHTML = `
+                    <div class="col-md-4 col-lg-3 item-card" style="box-sizing: border-box; height: 350px; display: flex; flex-direction: column; justify-content: space-between; padding: 10px; background-color: #fff; margin-bottom: 20px;">
+                        <div class="item-container" style="display: flex; flex-direction: column; align-items: center;">
+                            <div class="item-img" style="width: 100%; height: 150px; background-image: url('${item.image || 'default-image.jpg'}'); background-size: cover; background-position: center; border-radius: 5px;"></div>
+                            <div class="item-details" style="width: 100%; text-align: center; margin-top: 10px;">
+                                <h3 class="item-title" style="font-size: 16px; font-weight: bold; margin-bottom: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.name || item.menuName}</h3>
+                                <span class="item-price"
+                                    data-price="${item.price || item.menuPrice}"
+                                    style="font-size: 16px; font-weight: bold; margin-bottom: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    &#8377;${(item.price * item.quantity) || item.menuPrice}
+                                </span>
+                                <div class="item-actions" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                                    <button class="btn btn-light btn-sm quantity-btn decrease-btn" data-id="${item.itemId}">-</button>
+                                    <span class="item-quantity" id="quantity-${item.itemId}">${item.quantity || 1}</span>
+                                    <button class="btn btn-light btn-sm quantity-btn increase-btn" data-id="${item.itemId}">+</button>
+                                </div>
+                                <p class="item-offer" style="display: none">${item.offer}</p>
+                                <p class="item-abovePrice" style="display: none">${item.abovePrice}</p>
+                                <button class="btn btn-danger btn-sm remove-item-btn" data-id="${item.itemId}" style="margin-top: 10px;">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.innerHTML += itemHTML;
+            });
+
+            // Add event listeners for quantity buttons
+            document.querySelectorAll('.increase-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    updateQuantity(this, 'increase');
+                });
+            });
+
+            document.querySelectorAll('.decrease-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    updateQuantity(this, 'decrease');
+                });
+            });
+
+            // Add event listeners for remove buttons
+            document.querySelectorAll('.remove-item-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    removeItem(this);
+                });
+            });
+
+            // Recalculate prices after fetching items
+            recalculatePrices();
+        }
+    })
+    .catch((error) => console.error("Error fetching cart items:", error));
+});
+
+// Function to recalculate prices for all items
+function recalculatePrices() {
+    document.querySelectorAll('.item-details').forEach(itemDetails => {
+        const priceElement = itemDetails.querySelector('.item-price');
+        const basePrice = parseInt(priceElement.getAttribute('data-price'));
+        const quantityElement = itemDetails.querySelector('.item-quantity');
+        const currentQuantity = parseInt(quantityElement.textContent);
+        const offer = parseInt(itemDetails.querySelector('.item-offer').textContent) || 0;
+        const abovePrice = parseInt(itemDetails.querySelector('.item-abovePrice').textContent) || 0;
+
+        let totalPrice;
+
+        if (currentQuantity >= abovePrice) {
+            // Apply the discount
+            totalPrice = currentQuantity * basePrice * (1 - offer / 100);
+        } else {
+            // No discount applied
+            totalPrice = currentQuantity * basePrice;
+        }
+
+        priceElement.textContent = `₹${totalPrice.toFixed(2)}`;
+    });
+}
+
+
+function updateQuantity(button, action) {
+    const itemId = button.getAttribute('data-id');
+    const quantityElement = document.getElementById(`quantity-${itemId}`);
+    let currentQuantity = parseInt(quantityElement.textContent);
+
+    if (action === 'increase') {
+        currentQuantity++;
+    } else if (action === 'decrease' && currentQuantity > 1) {
+        currentQuantity--;
+    }
+
+    quantityElement.textContent = currentQuantity;
+
+    // Update price dynamically
+    const itemDetails = button.closest('.item-details');
+    const priceElement = itemDetails.querySelector('.item-price');
+    const basePrice = parseInt(priceElement.getAttribute('data-price'));
+    const offer = parseInt(itemDetails.querySelector('.item-offer').textContent);
+    const abovePrice = parseInt(itemDetails.querySelector('.item-abovePrice').textContent);
+    const offerMessage = itemDetails.querySelector('.item-applied');
+
+    let totalPrice;
+
+    if (currentQuantity >= abovePrice) {
+        // Apply the discount
+        totalPrice = currentQuantity * basePrice * (1 - offer / 100);
+    } else {
+        // No discount applied
+        totalPrice = currentQuantity * basePrice;
+    }
+
+    priceElement.textContent = `₹${totalPrice.toFixed(2)}`;
+
+    // Send AJAX request to update the quantity
+    fetch("/cart/update-quantity", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            itemId: itemId,
+            quantity: currentQuantity
+        }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status !== "success") {
+            console.error("Failed to update quantity.");
+        } else {
+            // After successfully updating quantity, update the cart notification
+            updateCartNotification();
+        }
+    })
+    .catch((error) => console.error("Error updating quantity:", error));
+}
+
+function removeItem(button) {
+    const itemId = button.getAttribute('data-id');
+
+    // Send AJAX request to remove the item
+    fetch(`/cart/remove-item/${itemId}`, {
+        method: "DELETE",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status === "success") {
+            // Remove the item from the DOM
+            button.closest('.item-card').remove();
+            updateCartNotification();
+        } else {
+            console.error("Failed to remove item.");
+        }
+    })
+    .catch((error) => console.error("Error removing item:", error));
+}
+
+function updateCartNotification() {
+    fetch("/cart/cart-quantity", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.totalQuantity !== undefined) {
+            const cartNotification = document.getElementById("cartNotification");
+            cartNotification.textContent = data.totalQuantity;
+        }
+    })
+    .catch((error) => console.error("Error fetching cart quantity:", error));
+}
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch cart quantity on page load
+        fetch("/cart/cart-quantity")
+            .then(response => response.json())
+            .then(data => {
+                // Update the cart notification with the total quantity
+                document.getElementById("cartNotification").textContent = data.totalQuantity || 0;
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+</script>
+<script>
+  document.getElementById("checkoutBtn").addEventListener("click", () => {
+    window.location.href = "/checkout";
+  });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

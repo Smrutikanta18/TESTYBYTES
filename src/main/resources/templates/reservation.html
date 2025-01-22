@@ -125,6 +125,42 @@
     cursor: pointer;
 }
 	  </style>
+	  <style>
+		  .cart-notification7777 {
+    background-color: #ffa323;
+    color: white;
+    border-radius: 50%; /* Makes it a perfect circle */
+    width: 20px; /* Adjusted size for a neat look */
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Slightly larger for readability */
+    font-weight: bold;
+    position: absolute; /* Position relative to the parent */
+    top: 1px; /* Adjusted positioning */
+    right: 1px; /* Adjusted positioning */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); /* Glowing effect */
+    animation: pulse 1.5s infinite; /* Adds a subtle pulsing effect */
+}
+
+/* Optional pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Ensures the notification stays relative to the nav-link */
+.nav-item {
+    position: relative;
+}
+	  </style>
   </head>
   <body>
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -142,7 +178,7 @@
 					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					<li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
 					<li class="nav-item">
-						<a href="/cart" class="nav-link">Cart</a>
+						<a href="/cart" class="nav-link">Cart<span id="cartNotification" class="cart-notification7777">0</span></a>
 					</li>
 
 					<!-- Show Profile and Cart if authenticated -->
@@ -242,7 +278,13 @@
 					  </div>
 				  </div>
 				  <div class="col-md-6 d-flex align-items-stretch pb-5 pb-md-0">
-					  <div id="map"></div>
+					  <div id="map">
+						  <iframe class="position-relative w-100"
+								  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d771.2147087219136!2d83.44479187888969!3d19.246119483701808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1399010917722"
+								  frameborder="0" style="height: 100%; border:0; min-height: 150px;" allowfullscreen="" aria-hidden="false" tabindex="0">
+						  </iframe>
+					  </div>
+
 				  </div>
 			  </div>
 		  </div>
@@ -436,6 +478,18 @@ document.querySelector("#reservation-form").addEventListener("submit", function 
             messageBox.textContent = "An error occurred. Please try again later.";
         });
 });
+</script>
+	  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch cart quantity on page load
+        fetch("/cart/cart-quantity")
+            .then(response => response.json())
+            .then(data => {
+                // Update the cart notification with the total quantity
+                document.getElementById("cartNotification").textContent = data.totalQuantity || 0;
+            })
+            .catch((error) => console.error("Error:", error));
+    });
 </script>
 
   </body>

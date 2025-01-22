@@ -387,6 +387,42 @@ body {
         background-color: #0056b3;
     }
 </style>
+    <style>
+		  .cart-notification7777 {
+    background-color: #ffa323;
+    color: white;
+    border-radius: 50%; /* Makes it a perfect circle */
+    width: 20px; /* Adjusted size for a neat look */
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Slightly larger for readability */
+    font-weight: bold;
+    position: absolute; /* Position relative to the parent */
+    top: 1px; /* Adjusted positioning */
+    right: 1px; /* Adjusted positioning */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); /* Glowing effect */
+    animation: pulse 1.5s infinite; /* Adds a subtle pulsing effect */
+}
+
+/* Optional pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Ensures the notification stays relative to the nav-link */
+.nav-item {
+    position: relative;
+}
+	  </style>
 
 
 </head>
@@ -405,8 +441,8 @@ body {
                 <li class="nav-item"><a href="/menu" class="nav-link">Menu</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
                 <li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
-                <li class="nav-item" th:if="${isAuthenticated}">
-                    <a href="/cart" class="nav-link">Cart</a>
+                <li class="nav-item">
+                    <a href="/cart" class="nav-link">Cart<span id="cartNotification" class="cart-notification7777">0</span></a>
                 </li>
 
                 <!-- Show Profile and Cart if authenticated -->
@@ -717,6 +753,19 @@ function closeEditProfileModal() {
 });
 
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch cart quantity on page load
+        fetch("/cart/cart-quantity")
+            .then(response => response.json())
+            .then(data => {
+                // Update the cart notification with the total quantity
+                document.getElementById("cartNotification").textContent = data.totalQuantity || 0;
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+</script>
+
 
 </body>
 </html>

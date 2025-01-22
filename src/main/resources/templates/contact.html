@@ -22,6 +22,42 @@
 
       <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
       <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+      <style>
+		  .cart-notification7777 {
+    background-color: #ffa323;
+    color: white;
+    border-radius: 50%; /* Makes it a perfect circle */
+    width: 20px; /* Adjusted size for a neat look */
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Slightly larger for readability */
+    font-weight: bold;
+    position: absolute; /* Position relative to the parent */
+    top: 1px; /* Adjusted positioning */
+    right: 1px; /* Adjusted positioning */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); /* Glowing effect */
+    animation: pulse 1.5s infinite; /* Adds a subtle pulsing effect */
+}
+
+/* Optional pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Ensures the notification stays relative to the nav-link */
+.nav-item {
+    position: relative;
+}
+	  </style>
 
 
       <link rel="stylesheet" th:href="@{/css/flaticon.css}">
@@ -44,7 +80,7 @@
                     <li class="nav-item active"><a href="/contact" class="nav-link">Contact</a></li>
                     <li class="nav-item cta"><a href="/reservation" class="nav-link">Book a table</a></li>
                     <li class="nav-item">
-                        <a href="/cart" class="nav-link">Cart</a>
+                        <a href="/cart" class="nav-link">Cart<span id="cartNotification" class="cart-notification7777">0</span></a>
                     </li>
 
                     <!-- Show Profile and Cart if authenticated -->
@@ -129,13 +165,14 @@
                         </form>
                     </div>
 					<div class="col-md-6 d-flex align-items-stretch">
-						<div id="map">
+                        <div id="map">
                             <iframe class="position-relative w-100"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14022.983165729698!2d77.2002668!3d28.5478086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2127da1cf23%3A0xd89ebc21c669134d!2sHauz%20Khas%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1699655368324!5m2!1sen!2sin"
-                                    frameborder="0" style="height: 150px; border:0;" allowfullscreen="" aria-hidden="false"
-                                    tabindex="0"></iframe>
+                                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d771.2147087219136!2d83.44479187888969!3d19.246119483701808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1399010917722"
+                                    frameborder="0" style="height: 100%; border:0; min-height: 150px;" allowfullscreen="" aria-hidden="false" tabindex="0">
+                            </iframe>
                         </div>
-					</div>
+
+                    </div>
 				</div>
 			</div>
         </section>
@@ -290,6 +327,19 @@
       });
       });
 </script>
+      <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch cart quantity on page load
+        fetch("/cart/cart-quantity")
+            .then(response => response.json())
+            .then(data => {
+                // Update the cart notification with the total quantity
+                document.getElementById("cartNotification").textContent = data.totalQuantity || 0;
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+</script>
+
 
 
   </body>

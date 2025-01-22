@@ -98,6 +98,22 @@ public class MainController {
         return "contact";
     }
 
+    @RequestMapping("/cart")
+    public String cart(Model model) {
+        addAuthenticationStatus(model);
+        List<Instagram> instagramImages = instagramRepository.findAll();
+        model.addAttribute("instagramImages", instagramImages);
+        return "cart";
+    }
+
+    @RequestMapping("/checkout")
+    public String checkout(Model model) {
+        addAuthenticationStatus(model);
+        List<Instagram> instagramImages = instagramRepository.findAll();
+        model.addAttribute("instagramImages", instagramImages);
+        return "checkout";
+    }
+
     @RequestMapping("/menu")
     public String menu(Model model) {
         addAuthenticationStatus(model);
@@ -119,6 +135,29 @@ public class MainController {
         List<Instagram> instagramImages = instagramRepository.findAll();
         model.addAttribute("instagramImages", instagramImages);
         return "reservation";
+    }
+
+    @RequestMapping("/address")
+    public String address(Model model) {
+        addAuthenticationStatus(model);
+        List<Instagram> instagramImages = instagramRepository.findAll();
+        model.addAttribute("instagramImages", instagramImages);
+        return "address";
+    }
+    @RequestMapping("/payment")
+    public String payment(Model model) {
+        addAuthenticationStatus(model);
+        List<Instagram> instagramImages = instagramRepository.findAll();
+        model.addAttribute("instagramImages", instagramImages);
+        return "payment";
+    }
+
+    @RequestMapping("/orderPlaced")
+    public String orderPlaced(Model model) {
+        addAuthenticationStatus(model);
+        List<Instagram> instagramImages = instagramRepository.findAll();
+        model.addAttribute("instagramImages", instagramImages);
+        return "completed";
     }
 
     @RequestMapping("/login")
